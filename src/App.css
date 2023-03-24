@@ -1,1 +1,67 @@
+*{
+    box-sizing: border-box;
+}
+
+html{
+    background-color: #222831;
+    color: #EEEEEE;
+}
+
+.App{
+    padding: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+.centered{
+    width: fit-content;
+    margin: auto;
+}
+
+.input-bar{
+    width: 80vw;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    
+}
+    .input-bar > input{
+        flex: 1;
+        border: none;
+        background-color: #393E46;
+        color: #EEEEEE;
+    }
+
+.section{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.tasks-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.task{
+    background-color: #FFD369;
+    width: 200px;
+    min-height: 50px;
+    display: flex;
+    color:#222831;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 20px 20px 20px;
+    padding: 15px;
+}
+
+.task .finished{
+    text-decoration: line-through;
+}
+
 

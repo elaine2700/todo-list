@@ -1,64 +1,70 @@
 import logo from './logo.svg';
 import './App.css';
 import styled from "styled-components";
-import React, { useState } from "react";
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
+import React, { useEffect, useState } from "react";
+import Task from "./Task";
 
 const Button = styled.button`
   display:inline-block;
-  flex: 1;
-  border: none;
-  background-color: teal;
-  color: white;
+  border: 1px solid #EEEEEE;
+  background-color: #393E46;
+  color: #EEEEEE;
   height: 30px;
   width: 50px;
-  border-radius: 2px;
+  border-radius: 15px;
   cursor: pointer;
 `;
 
 const Text = styled.input`
  border: 2px solid #000;
+ border-radius: 20px;
 `;
 
 const TaskCount = styled.span`
   margin: 10px;
 `;
-const Tasks = styled.div`
-`;
 
-const LIST = styled.li`
-    listStyle:"none";
-    text-decoration: "line-through";
-`;
-  
 
 function App() {
+
+  useEffect(() => {
+    setTodoList([]);
+  }, []);
 
   const [input, setInput] = useState("");
   const [todoList, setTodoList] = useState([]);
   const [completedTaskCount, setCompletedTaskCount] = useState(0);
 
-  const handleClick = () => {
+  const AddTask = () => {
     const id = todoList.length + 1;
-    setTodoList((prev) => [
-      ...prev,
-      {
+      const Task = {
         id: id,
         task: input,
-        complete: false,
-      },
-    ]);
-    setInput("");
+        complete: false
+      }
+      
+      setTodoList((prev) => [
+        ...prev,
+        Task,
+      ]);
+      
+      //setTodoList(task);
+      setInput("");
+  }
+
+  const handleClick = () => {
+    AddTask();
   };
 
   const Clear = ()=> {
     setTodoList(() => []);
     setCompletedTaskCount(0);
+  };
+
+  const handleKeyPress = (event) => {
+    if(event.key === "Enter"){
+      AddTask();
+    }
   };
 
   const handleComplete = (id) => {
@@ -73,49 +79,63 @@ function App() {
             //Task is complete, modifying it back to pending, decrement Complete count
             setCompletedTaskCount(completedTaskCount - 1);
         }
-item = { ...task, complete: !task.complete };
-      } else item = { ...task };
-return item;
+    item = { ...task, complete: !task.complete };
+          } else item = { ...task };
+    return item;
     });
     setTodoList(list);
   };
 
   return (
-    <Container>
-      <div>
-          <h2>Todo List</h2>
-          <Text value={input} onInput={(e) =>setInput(e.target.value)} />
-          <Button onClick={() => handleClick()}>Add</Button>
-        <Tasks>
-          <TaskCount>
-            <b>Pending Tasks</b> {todoList.length - completedTaskCount}
-          </TaskCount>
-          <TaskCount>
-            <b>Completed Tasks</b> {completedTaskCount}
-          </TaskCount>
-        </Tasks>
-        <div>
-          <ul>
-            {todoList.map((todo) => {
-              return (
-                <LIST
-                  complete = {todo.complete}
-                  id={todo.id}
-                  onClick={() => handleComplete(todo.id)}
-                  style={{
-                    listStyle: "none",
-                    textDecoration: todo.complete && "line-through",
-                  }}
-                >
-                  {todo.task}
-                </LIST>
-              );
-            })}
-          </ul>
-        </div>
+
+    <div class="App">
+      <h1>Todo List</h1>
+      <div className='centered input-bar'>
+        <Text 
+          value={input} 
+          placeholder='Add a Task'
+          onInput={(e) =>setInput(e.target.value)} 
+          onKeyDown={handleKeyPress}/>
+        <Button onClick={() => handleClick()}>Add</Button>
         <Button onClick={() => Clear()}>Clear</Button>
       </div>
-    </Container>
+
+      <div class="centered section">
+        <TaskCount>
+          <b>Pending Tasks</b> {todoList.length - completedTaskCount}
+        </TaskCount>
+        <TaskCount>
+          <b>Completed Tasks</b> {completedTaskCount}
+        </TaskCount>
+      </div>
+      <div className='section'>
+      {
+        todoList?.length > 0 ?
+        (
+          <div className='tasks-container'>
+
+            {
+              todoList.map((todo) => (
+                <Task 
+                task={todo}
+                onPress={() => handleComplete(todo.id)}
+                />
+              ))
+            }
+            
+          </div>
+        ) :
+        (
+          <div className='centered'>
+            <h2>Add a task</h2>
+          </div>
+        )
+      }
+        
+      </div>
+      
+    </div>
+    
   );
 }
 
