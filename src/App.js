@@ -35,12 +35,39 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [completedTaskCount, setCompletedTaskCount] = useState(0);
 
+  const handleColor = (id, newColor) => {
+    let taskList = todoList.map((task) => {
+      let item = {};
+      if (task.id == id) {
+        switch(newColor){
+          case "yellow":
+            task.color = "yellow";
+            break;
+          case "blue":
+            task.color = "blue";
+            break;
+          case "orange":
+            task.color = "orange";
+            break;
+          default:
+            task.color = "orange";
+            break;
+        }
+        item = { ...task};
+      } 
+      else item = { ...task };
+    return item;
+    });
+    setTodoList(taskList);
+  };
+
   const AddTask = () => {
     const id = todoList.length + 1;
       const Task = {
         id: id,
         task: input,
-        complete: false
+        complete: false,
+        color: "yellow"
       }
       
       setTodoList((prev) => [
@@ -79,8 +106,9 @@ function App() {
             //Task is complete, modifying it back to pending, decrement Complete count
             setCompletedTaskCount(completedTaskCount - 1);
         }
-    item = { ...task, complete: !task.complete };
-          } else item = { ...task };
+        item = { ...task, complete: !task.complete };
+      } 
+      else item = { ...task };
     return item;
     });
     setTodoList(list);
@@ -88,9 +116,9 @@ function App() {
 
   return (
 
-    <div class="App">
-      <h1>Todo List</h1>
-      <div className='centered input-bar'>
+    <div className="App">
+      <h1 className='section'>To Do List</h1>
+      <div className='centered input-bar section'>
         <Text 
           value={input} 
           placeholder='Add a Task'
@@ -118,7 +146,8 @@ function App() {
               todoList.map((todo) => (
                 <Task 
                 task={todo}
-                onPress={() => handleComplete(todo.id)}
+                taskCompleted={() => handleComplete(todo.id)}
+                colorHandler={handleColor}
                 />
               ))
             }

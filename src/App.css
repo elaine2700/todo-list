@@ -1,8 +1,10 @@
 *{
     box-sizing: border-box;
+    margin: 0;
 }
 
 html{
+    font-family: 'Rubik', sans-serif;
     background-color: #222831;
     color: #EEEEEE;
 }
@@ -49,19 +51,49 @@ h1{
 }
 
 .task{
-    background-color: #FFD369;
     width: 200px;
-    min-height: 50px;
-    display: flex;
+    min-height: 5rem;
+    
     color:#222831;
-    justify-content: center;
-    align-items: center;
+    
     border-radius: 0px 20px 20px 20px;
-    padding: 15px;
+    overflow: hidden;
+}
+
+.task > .task-options{
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.task > :nth-child(2){
+    padding: 0.5rem;
+}
+
+.task-options > .option {
+    height: 1rem;
+    aspect-ratio: 1/1;
+    color: #e3f6d6;
+    border-radius: 50%;
+    border: #222831 solid 1px;
+    text-align: center;
 }
 
 .task .finished{
     text-decoration: line-through;
+}
+
+.yellow{
+    background-color: #FFD369;
+}
+.orange{
+    background-color: #E2703A;
+}
+.grey{
+    background-color: #222831;
+}
+.blue{
+    background-color: #90B8F8;
 }
 
 
